@@ -93,15 +93,22 @@ public class Rule {
 
 		// Rule name
 		Node ruleNameNode = (Node)xPath.evaluate("Name", ruleNode, XPathConstants.NODE);
-		if (ruleNameNode == null) {
-			throw new SAXException("Rule without name.");
+		if (ruleNameNode != null) {
+			this.name = ruleNameNode.getTextContent();
 		}
-		this.name = ruleNameNode.getTextContent();
 
 		// Rule title
 		Node ruleTitleNode = (Node)xPath.evaluate("Title", ruleNode, XPathConstants.NODE);
 		if (ruleTitleNode != null) {
 			this.title = ruleTitleNode.getTextContent();
+		}
+
+		if (this.name == null) {
+			this.name = this.title;
+		}
+
+		if (this.name == null) {
+			throw new SAXException("Rule without name or title.");
 		}
 
 		// Rule description

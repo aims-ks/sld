@@ -6,7 +6,7 @@
 
 	<groupId>au.gov.aims</groupId>
 	<artifactId>sld</artifactId>
-	<version>0.1</version>
+	<version>0.1.1</version>
 	<packaging>jar</packaging>
 
 	<!-- Search maven repo: http://search.maven.org -->
