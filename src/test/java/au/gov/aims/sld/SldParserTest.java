@@ -31,6 +31,14 @@ public class SldParserTest {
 	}
 
 	@Test
+	public void testParserWithLineSymbolizer() throws Exception {
+		SldParser parser = new SldParser();
+		StyleSheet styleSheet = TestUtils.getStyleSheet(parser, "styles/Bright-Earth_Coastline.sld");
+
+		System.out.println(styleSheet);
+	}
+
+	@Test
 	public void testParserWithGraphics() throws Exception {
 		SldParser parser = new SldParser();
 		StyleSheet styleSheet = TestUtils.getStyleSheet(parser, "styles/GBR_10m-GBR-cities.sld");

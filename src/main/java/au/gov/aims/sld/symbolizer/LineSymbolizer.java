@@ -27,6 +27,8 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
+import java.awt.Paint;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,6 +67,28 @@ public class LineSymbolizer extends Symbolizer {
 
 	@Override
 	public List<GeoShape> applyStyle(GeoShape geoShape) {
-		throw new NotImplementedException();
+		List<GeoShape> styledGeoShapes = new ArrayList<GeoShape>();
+
+		if (geoShape != null) {
+			GeoShape styledGeoShape = new GeoShape(geoShape);
+
+			styledGeoShape.setFillPaint(null);
+
+			if (this.stroke != null) {
+				Paint strokePaint = this.stroke.getStrokePaint();
+				if (strokePaint != null) {
+					styledGeoShape.setStrokePaint(strokePaint);
+				}
+
+				java.awt.Stroke stroke = this.stroke.getStroke();
+				if (stroke != null) {
+					styledGeoShape.setStroke(stroke);
+				}
+			}
+
+			styledGeoShapes.add(styledGeoShape);
+		}
+
+		return styledGeoShapes;
 	}
 }
