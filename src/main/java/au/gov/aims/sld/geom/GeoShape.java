@@ -19,6 +19,7 @@
 package au.gov.aims.sld.geom;
 
 import au.gov.aims.sld.PropertyValue;
+import au.gov.aims.sld.TextAlignment;
 
 import java.awt.Font;
 import java.awt.Paint;
@@ -41,6 +42,7 @@ public class GeoShape {
 	private Stroke stroke;
 
 	// Text
+	private TextAlignment textAlignment;
 	private String label;
 	private Font font;
 
@@ -58,6 +60,7 @@ public class GeoShape {
 	}
 
 	private GeoShape(Object shape, Map<String, PropertyValue> properties) {
+		this.textAlignment = null;
 		this.shape = shape;
 		this.properties = properties;
 	}
@@ -97,6 +100,14 @@ public class GeoShape {
 	}
 
 	// Text
+	public TextAlignment getTextAlignment() {
+		return this.textAlignment == null ? TextAlignment.LEFT : this.textAlignment;
+	}
+
+	public void setTextAlignment(TextAlignment textAlignment) {
+		this.textAlignment = textAlignment;
+	}
+
 	public String getLabel() {
 		return this.label;
 	}
@@ -175,6 +186,8 @@ public class GeoShape {
 				", fillPaint=" + fillPaint +
 				", strokePaint=" + strokePaint +
 				", stroke=" + stroke +
+				", textAlignment=" + textAlignment +
+				", label='" + label + '\'' +
 				", font=" + font +
 				'}';
 	}

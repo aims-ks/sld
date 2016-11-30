@@ -20,20 +20,28 @@ package au.gov.aims.sld.symbolizer;
 
 import au.gov.aims.sld.PropertyValue;
 import au.gov.aims.sld.StyleSheet;
+import au.gov.aims.sld.TextAlignment;
 import au.gov.aims.sld.geom.GeoShape;
 import au.gov.aims.sld.symbolizer.attributes.Fill;
 import au.gov.aims.sld.symbolizer.attributes.Font;
 import au.gov.aims.sld.symbolizer.attributes.Geometry;
 import au.gov.aims.sld.symbolizer.attributes.Halo;
 import au.gov.aims.sld.symbolizer.attributes.LabelPlacement;
+import au.gov.aims.sld.symbolizer.attributes.placement.Placement;
+import au.gov.aims.sld.symbolizer.attributes.placement.PointPlacement;
 import org.w3c.dom.Node;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -156,24 +164,74 @@ public class TextSymbolizer extends Symbolizer {
 				if (rawLabelValue != null) {
 					String labelValue = rawLabelValue.getStringValue();
 					if (labelValue != null && !labelValue.isEmpty()) {
-						Point2D anchor = geoShape.getCentroid();
-
-						GeoShape labelShape = new GeoShape(anchor, properties);
-
-						labelShape.setLabel(labelValue);
-
-						if (this.fill != null) {
-							labelShape.setFillPaint(this.fill.getFillPaint());
-						}
-
-						if (this.font != null) {
-							java.awt.Font font = this.font.getFont();
-							if (font != null) {
-								labelShape.setFont(font);
+						Placement placement = this.labelPlacement.getPlacement();
+						if (placement instanceof PointPlacement) {
+							PointPlacement pointPlacement = (PointPlacement)placement;
+							Point2D ratio = pointPlacement.getAnchorPoint();
+							if (ratio == null) {
+								// (Default) Bottom left of the box is (0, 0)
+								//   http://docs.geoserver.org/latest/en/user/styling/sld/reference/labeling.html
+								ratio = new Point2D.Double(0, 0);
 							}
-						}
 
-						styledGeoShapes.add(labelShape);
+							Point2D anchor = geoShape.getCentroid();
+							TextAlignment textAlignment = null;
+
+							java.awt.Font awtFont = null;
+							if (this.font != null) {
+								awtFont = this.font.getFont();
+							}
+
+							// Offset the anchor point (if needed)
+							if (awtFont != null) {
+								BufferedImage dummyImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
+								Graphics g = dummyImage.getGraphics();
+								FontMetrics fm = g.getFontMetrics(awtFont);
+
+								double offsetX, ratioX = ratio.getX();
+								if (ratioX > 0.66) {
+									textAlignment = TextAlignment.RIGHT;
+									offsetX = fm.stringWidth(labelValue) * (ratioX - 1);
+								} else if (ratioX > 0.34) {
+									textAlignment = TextAlignment.CENTRE;
+									offsetX = fm.stringWidth(labelValue) * (ratioX - 0.5);
+								} else {
+									textAlignment = TextAlignment.LEFT;
+									offsetX = fm.stringWidth(labelValue) * ratioX;
+								}
+
+								// NOTE: Graphics2D place string on a point higher than it's bounding box. Some characters goes bellow that point, such as "p", "g", etc.
+								//   The anchor point needs to be corrected by the maximum height of the bits that goes bellow the "font line". Those bits are called "descent".
+								anchor = new Point2D.Double(
+									anchor.getX() - offsetX,
+									anchor.getY() + (fm.getHeight() * ratio.getY()) - fm.getMaxDescent()
+								);
+							} else {
+								LOGGER.log(Level.WARNING, "Label placement can't be determined when 'Font' is not defined.");
+							}
+
+							GeoShape labelShape = new GeoShape(anchor, properties);
+
+							labelShape.setLabel(labelValue);
+
+							if (textAlignment != null) {
+								labelShape.setTextAlignment(textAlignment);
+							}
+
+							if (this.fill != null) {
+								labelShape.setFillPaint(this.fill.getFillPaint());
+							}
+
+							if (awtFont != null) {
+								labelShape.setFont(awtFont);
+							}
+
+							styledGeoShapes.add(labelShape);
+						} else {
+							// TODO LinePlacement
+							LOGGER.log(Level.SEVERE, "Label placement with '" + placement.getClass().getSimpleName() + "' not yet implemented.");
+							throw new NotImplementedException();
+						}
 					}
 				}
 			}
