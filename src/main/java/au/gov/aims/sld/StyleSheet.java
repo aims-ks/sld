@@ -37,8 +37,8 @@ public class StyleSheet {
 	private String description;
 	private Boolean isDefault;
 
-	private double strokeWidthRatio = 1.0;
-	private double fontSizeRatio = 1.0;
+	private float strokeWidthRatio = 1.0f;
+	private float fontSizeRatio = 1.0f;
 
 	// Those are basically layers. First in the list is drawn first (appear bellow the others).
 	private List<FeatureTypeStyle> featureTypeStyles;
@@ -63,19 +63,19 @@ public class StyleSheet {
 		return this.isDefault;
 	}
 
-	public double getStrokeWidthRatio() {
+	public float getStrokeWidthRatio() {
 		return this.strokeWidthRatio;
 	}
 
-	public void setStrokeWidthRatio(double strokeWidthRatio) {
+	public void setStrokeWidthRatio(float strokeWidthRatio) {
 		this.strokeWidthRatio = strokeWidthRatio;
 	}
 
-	public double getFontSizeRatio() {
+	public float getFontSizeRatio() {
 		return this.fontSizeRatio;
 	}
 
-	public void setFontSizeRatio(double fontSizeRatio) {
+	public void setFontSizeRatio(float fontSizeRatio) {
 		this.fontSizeRatio = fontSizeRatio;
 	}
 

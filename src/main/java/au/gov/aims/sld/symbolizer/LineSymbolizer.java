@@ -23,7 +23,6 @@ import au.gov.aims.sld.geom.GeoShape;
 import au.gov.aims.sld.symbolizer.attributes.Geometry;
 import au.gov.aims.sld.symbolizer.attributes.Stroke;
 import org.w3c.dom.Node;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;

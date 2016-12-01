@@ -104,11 +104,11 @@ public class Stroke extends Attribute {
 
 	public java.awt.Stroke getStroke() {
 		StyleSheet styleSheet = this.getStyleSheet();
-		double strokeWidthRatio = styleSheet == null ? 1.0 : styleSheet.getStrokeWidthRatio();
+		float strokeWidthRatio = styleSheet == null ? 1.0f : styleSheet.getStrokeWidthRatio();
 
 		return this.strokeWidth == null ? null :
 				new BasicStroke(
-						Math.round(this.strokeWidth * strokeWidthRatio),
+						this.strokeWidth * strokeWidthRatio,
 						BasicStroke.CAP_ROUND,
 						BasicStroke.JOIN_ROUND);
 	}
