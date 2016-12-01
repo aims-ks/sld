@@ -43,11 +43,11 @@ public class PropertyIsNotEqualTo extends ComparisonFilter {
 					if (propertyValue != null && Utils.isNumeric(literal)) {
 						Double literalNumeric = Double.parseDouble(literal);
 
-						return propertyValue.equals(literalNumeric);
+						return !propertyValue.equals(literalNumeric);
 					} else {
 						String propertyValueStr = rawPropertyValue.getStringValue();
 						// It's seems to be case sensitive
-						return propertyValueStr.equals(literal);
+						return !propertyValueStr.equals(literal);
 					}
 				}
 			}
