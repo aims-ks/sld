@@ -185,6 +185,9 @@ public class WellKnownMarkFactory {
 
 		} else if (wellKnownName.equalsIgnoreCase("square")) {
 			shape = WellKnownMarkFactory.square;
+
+		} else {
+			throw new IllegalArgumentException("Invalid SLD wellKnownName: " + wellKnownName);
 		}
 
 		return shape;

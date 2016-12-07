@@ -38,6 +38,8 @@ public class SymbolizerFactory {
 			symbolizer = new RasterSymbolizer(styleSheet);
 		} else if ("TextSymbolizer".equals(symbolizerName)) {
 			symbolizer = new TextSymbolizer(styleSheet);
+		} else {
+			throw new IllegalArgumentException("Invalid SLD symbolizer: " + symbolizerName);
 		}
 
 		if (symbolizer != null) {

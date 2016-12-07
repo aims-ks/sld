@@ -156,6 +156,7 @@ public class GeoShape {
 		// Text
 		newObject.label = this.label;
 		newObject.font = this.font;
+		newObject.textAlignment = this.textAlignment;
 	}
 
 	public GeoShape createTransformedGeoShape(AffineTransform transform) {

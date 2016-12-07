@@ -143,6 +143,9 @@ public class FilterFactory {
 			filter = new Or();
 		} else if("ogc:Not".equals(filterName)) {
 			filter = new Not();
+
+		} else {
+			throw new IllegalArgumentException("Invalid SLD filter: " + filterName);
 		}
 
 		if (filter != null) {
