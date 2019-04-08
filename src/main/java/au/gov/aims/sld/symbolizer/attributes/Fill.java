@@ -19,7 +19,7 @@
 package au.gov.aims.sld.symbolizer.attributes;
 
 import au.gov.aims.sld.StyleSheet;
-import au.gov.aims.sld.Utils;
+import au.gov.aims.sld.SldUtils;
 import org.w3c.dom.Node;
 
 import javax.xml.xpath.XPath;
@@ -62,7 +62,7 @@ public class Fill extends Attribute {
 
 	public Paint getFillPaint() {
 		return this.fillColour == null ? null :
-				Utils.parseHexColor(this.fillColour, this.fillOpacity);
+				SldUtils.parseHexColor(this.fillColour, this.fillOpacity);
 	}
 
 	@Override

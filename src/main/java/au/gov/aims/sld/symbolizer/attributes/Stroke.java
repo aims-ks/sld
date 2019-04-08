@@ -19,7 +19,7 @@
 package au.gov.aims.sld.symbolizer.attributes;
 
 import au.gov.aims.sld.StyleSheet;
-import au.gov.aims.sld.Utils;
+import au.gov.aims.sld.SldUtils;
 import org.w3c.dom.Node;
 
 import javax.xml.xpath.XPath;
@@ -99,7 +99,7 @@ public class Stroke extends Attribute {
 
 	public Paint getStrokePaint() {
 		return this.strokeColour == null ? null :
-				Utils.parseHexColor(this.strokeColour, this.strokeOpacity);
+				SldUtils.parseHexColor(this.strokeColour, this.strokeOpacity);
 	}
 
 	public java.awt.Stroke getStroke() {

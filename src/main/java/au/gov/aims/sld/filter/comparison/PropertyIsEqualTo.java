@@ -19,7 +19,7 @@
 package au.gov.aims.sld.filter.comparison;
 
 import au.gov.aims.sld.PropertyValue;
-import au.gov.aims.sld.Utils;
+import au.gov.aims.sld.SldUtils;
 import au.gov.aims.sld.geom.GeoShape;
 
 import java.util.Map;
@@ -40,7 +40,7 @@ public class PropertyIsEqualTo extends ComparisonFilter {
 				if (rawPropertyValue != null) {
 					Double propertyValue = rawPropertyValue.getDoubleValue();
 
-					if (propertyValue != null && Utils.isNumeric(literal)) {
+					if (propertyValue != null && SldUtils.isNumeric(literal)) {
 						Double literalNumeric = Double.parseDouble(literal);
 						return propertyValue.equals(literalNumeric);
 					} else {

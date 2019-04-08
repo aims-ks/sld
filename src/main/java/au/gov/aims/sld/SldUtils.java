@@ -24,7 +24,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Utils {
+public class SldUtils {
 	/**
 	 * Example: Utils.getChildNodes(xmlNode, Node.ELEMENT_NODE);
 	 */
@@ -50,6 +50,10 @@ public class Utils {
 	}
 
 	public static Color parseHexColor(String hexColor, Double opacity) {
+		if (hexColor == null || hexColor.length() != 7 || !hexColor.startsWith("#")) {
+			return null;
+		}
+
 		int intOpacity = opacity == null ? 255 :
 				(int)Math.round(opacity * 255);
 

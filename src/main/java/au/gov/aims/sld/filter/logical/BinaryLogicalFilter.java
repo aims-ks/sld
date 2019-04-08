@@ -18,7 +18,7 @@
  */
 package au.gov.aims.sld.filter.logical;
 
-import au.gov.aims.sld.Utils;
+import au.gov.aims.sld.SldUtils;
 import au.gov.aims.sld.filter.Filter;
 import au.gov.aims.sld.filter.FilterFactory;
 import org.w3c.dom.Node;
@@ -44,7 +44,7 @@ public abstract class BinaryLogicalFilter extends LogicalFilter {
 
 	@Override
 	public void parse(Node xmlNode, XPath xPath) throws Exception {
-		List<Node> elements = Utils.getChildNodes(xmlNode, Node.ELEMENT_NODE);
+		List<Node> elements = SldUtils.getChildNodes(xmlNode, Node.ELEMENT_NODE);
 		if (elements == null || elements.isEmpty()) {
 			LOGGER.log(Level.WARNING, "Binary filter contains no elements.");
 			return;

@@ -19,7 +19,7 @@
 package au.gov.aims.sld.filter.comparison;
 
 import au.gov.aims.sld.PropertyValue;
-import au.gov.aims.sld.Utils;
+import au.gov.aims.sld.SldUtils;
 import au.gov.aims.sld.geom.GeoShape;
 import org.w3c.dom.Node;
 
@@ -72,7 +72,7 @@ public class PropertyIsBetween extends ComparisonFilter {
 				if (rawPropertyValue != null) {
 					Double propertyValue = rawPropertyValue.getDoubleValue();
 
-					if (propertyValue != null && Utils.isNumeric(this.lowerBoundary) && Utils.isNumeric(this.upperBoundary)) {
+					if (propertyValue != null && SldUtils.isNumeric(this.lowerBoundary) && SldUtils.isNumeric(this.upperBoundary)) {
 						Double lowerBoundaryNumeric = Double.parseDouble(this.lowerBoundary);
 						Double upperBoundaryNumeric = Double.parseDouble(this.upperBoundary);
 
