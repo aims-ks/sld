@@ -147,7 +147,9 @@ public class Graphic extends Attribute {
 				Point2D center = geoShape.getCentroid();
 				AffineTransform at = new AffineTransform();
 				at.translate(center.getX(), center.getY());
-				at.scale(this.size, -this.size);
+
+				float ratio = this.getStyleSheet().getStrokeWidthRatio();
+				at.scale(this.size * ratio, -this.size * ratio);
 
 				shape = at.createTransformedShape(shape);
 
