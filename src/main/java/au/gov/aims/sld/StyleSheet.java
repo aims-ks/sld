@@ -38,6 +38,7 @@ public class StyleSheet {
 	private Boolean isDefault;
 
 	private float strokeWidthRatio = 1.0f;
+	private float pointSizeRatio = 1.0f;
 	private float fontSizeRatio = 1.0f;
 
 	// Those are basically layers. First in the list is drawn first (appear bellow the others).
@@ -69,6 +70,14 @@ public class StyleSheet {
 
 	public void setStrokeWidthRatio(float strokeWidthRatio) {
 		this.strokeWidthRatio = strokeWidthRatio;
+	}
+
+	public float getPointSizeRatio() {
+		return this.pointSizeRatio;
+	}
+
+	public void setPointSizeRatio(float pointSizeRatio) {
+		this.pointSizeRatio = pointSizeRatio;
 	}
 
 	public float getFontSizeRatio() {

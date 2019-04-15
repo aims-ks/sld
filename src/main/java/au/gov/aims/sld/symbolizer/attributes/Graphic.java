@@ -148,7 +148,7 @@ public class Graphic extends Attribute {
 				AffineTransform at = new AffineTransform();
 				at.translate(center.getX(), center.getY());
 
-				float ratio = this.getStyleSheet().getStrokeWidthRatio();
+				float ratio = this.getStyleSheet().getPointSizeRatio();
 				at.scale(this.size * ratio, -this.size * ratio);
 
 				shape = at.createTransformedShape(shape);
