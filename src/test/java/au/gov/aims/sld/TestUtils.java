@@ -20,6 +20,9 @@ package au.gov.aims.sld;
 
 import java.io.InputStream;
 
+/**
+ * List of methods used in tests (to avoid code duplication)
+ */
 public class TestUtils {
 
 	protected static StyleSheet getStyleSheet(SldParser parser, String sldPath) throws Exception {
