@@ -62,7 +62,7 @@ public class Fill extends Attribute {
 
 	public Paint getFillPaint() {
 		return this.fillColour == null ? null :
-				SldUtils.parseHexColor(this.fillColour, this.fillOpacity);
+				SldUtils.parseHexColour(this.fillColour, this.fillOpacity);
 	}
 
 	@Override

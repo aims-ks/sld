@@ -49,19 +49,45 @@ public class SldUtils {
 		return true;
 	}
 
-	public static Color parseHexColor(String hexColor, Double opacity) {
-		if (hexColor == null || hexColor.length() != 7 || !hexColor.startsWith("#")) {
+	public static Color parseHexColour(String hexColour) {
+		return parseHexColour(hexColour, 1.0);
+	}
+
+	public static Color parseHexColour(String hexColour, Double opacity) {
+		if (hexColour == null || !hexColour.startsWith("#")) {
 			return null;
 		}
 
-		int intOpacity = opacity == null ? 255 :
-				(int)Math.round(opacity * 255);
+		int hexLength = hexColour.length();
+		if (hexLength != 7 && hexLength != 9) {
+			return null;
+		}
+
+		int intOpacity = 255;
+		if (hexLength == 9) {
+			intOpacity = Integer.valueOf(hexColour.substring(7, 9), 16);
+
+		} else if (hexLength == 7) {
+			intOpacity = opacity == null ? 255 :
+					(int)Math.round(opacity * 255);
+		}
 
 		return new Color(
-			Integer.valueOf(hexColor.substring(1, 3), 16),
-			Integer.valueOf(hexColor.substring(3, 5), 16),
-			Integer.valueOf(hexColor.substring(5, 7), 16),
+			Integer.valueOf(hexColour.substring(1, 3), 16),
+			Integer.valueOf(hexColour.substring(3, 5), 16),
+			Integer.valueOf(hexColour.substring(5, 7), 16),
 			intOpacity
 		);
+	}
+
+	/**
+	 * @param hexColour
+	 * @param opacity
+	 * @return
+	 * @deprecated Use parseHexColour
+	 */
+	@Deprecated
+	public static Color parseHexColor(String hexColour, Double opacity) {
+		return parseHexColour(hexColour, opacity);
 	}
 }

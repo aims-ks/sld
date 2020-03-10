@@ -99,7 +99,7 @@ public class Stroke extends Attribute {
 
 	public Paint getStrokePaint() {
 		return this.strokeColour == null ? null :
-				SldUtils.parseHexColor(this.strokeColour, this.strokeOpacity);
+				SldUtils.parseHexColour(this.strokeColour, this.strokeOpacity);
 	}
 
 	public java.awt.Stroke getStroke() {
