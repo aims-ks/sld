@@ -18,11 +18,16 @@
  */
 package au.gov.aims.sld.filter.logical;
 
+import au.gov.aims.sld.filter.Filter;
 import au.gov.aims.sld.geom.GeoShape;
 
 public class And extends BinaryLogicalFilter {
 	@Override
 	public boolean filter(GeoShape geoShape) {
-		return this.getLeftFilter().filter(geoShape) && this.getRightFilter().filter(geoShape);
+		boolean result = this.getLeftFilter().filter(geoShape);
+		for (Filter rightFilter : this.getRightFilters()) {
+			result = result && rightFilter.filter(geoShape);
+		}
+		return result;
 	}
 }

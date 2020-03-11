@@ -24,22 +24,24 @@ import au.gov.aims.sld.filter.FilterFactory;
 import org.w3c.dom.Node;
 
 import javax.xml.xpath.XPath;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+// http://schemas.opengis.net/filter/1.1.0/filter.xsd
 public abstract class BinaryLogicalFilter extends LogicalFilter {
 	private static final Logger LOGGER = Logger.getLogger(BinaryLogicalFilter.class.getSimpleName());
 
 	private Filter leftFilter;
-	private Filter rightFilter;
+	private List<Filter> rightFilters;
 
 	public Filter getLeftFilter() {
 		return this.leftFilter;
 	}
 
-	public Filter getRightFilter() {
-		return this.rightFilter;
+	public List<Filter> getRightFilters() {
+		return this.rightFilters;
 	}
 
 	@Override
@@ -50,8 +52,8 @@ public abstract class BinaryLogicalFilter extends LogicalFilter {
 			return;
 		}
 
-		if (elements.size() != 2) {
-			LOGGER.log(Level.WARNING, "Binary filter contains " + elements.size() + " elements. Expected 2.");
+		if (elements.size() < 2) {
+			LOGGER.log(Level.WARNING, String.format("Binary filter contains %d elements. Expected minimum 2.", elements.size()));
 			return;
 		}
 
@@ -61,21 +63,25 @@ public abstract class BinaryLogicalFilter extends LogicalFilter {
 			return;
 		}
 
-		Filter rightFilter = FilterFactory.fromXML(elements.get(1), xPath);
-		if (rightFilter == null) {
-			LOGGER.log(Level.WARNING, "Binary filter contains invalid right element.");
-			return;
+		List<Filter> rightFilters = new ArrayList<Filter>();
+		for (int i=1; i<elements.size(); i++) {
+			Filter rightFilter = FilterFactory.fromXML(elements.get(i), xPath);
+			if (rightFilter == null) {
+				LOGGER.log(Level.WARNING, String.format("Binary filter contains invalid right element, index %d.", i));
+				return;
+			}
+			rightFilters.add(rightFilter);
 		}
 
 		this.leftFilter = leftFilter;
-		this.rightFilter = rightFilter;
+		this.rightFilters = rightFilters;
 	}
 
 	@Override
 	public String toString() {
 		return "BinaryLogicalFilter{" +
-				"leftFilter=" + leftFilter +
-				", rightFilter=" + rightFilter +
+				"leftFilter=" + this.leftFilter +
+				", rightFilters=" + this.rightFilters +
 				'}';
 	}
 }
