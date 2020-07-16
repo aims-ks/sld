@@ -31,7 +31,7 @@
 		<repository>
 			<id>github</id>
 			<name>GitHub AIMS-KS Apache Maven Packages</name>
-			<url>https://maven.pkg.github.com/aims-ks/mvn-repo</url>
+			<url>https://maven.pkg.github.com/aims-ks/sld</url>
 		</repository>
 	</distributionManagement>
 </project>
