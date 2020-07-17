@@ -3,8 +3,15 @@
                       http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
     <servers>
+        <!-- Used to deploy the package to GitHub -->
         <server>
             <id>github</id>
+            <username>${env.GITHUB_USERNAME}</username>
+            <password>${env.GITHUB_TOKEN}</password>
+        </server>
+        <!-- Used by GitHub server to resolve AIMS-KS dependencies when running tests or building the package -->
+        <server>
+            <id>github_aimsks</id>
             <username>${env.GITHUB_USERNAME}</username>
             <password>${env.GITHUB_TOKEN}</password>
         </server>

@@ -19,4 +19,6 @@ jobs:
       - uses: actions/checkout@v2
         
       - name: Execute tests with Maven.
-        run: mvn -B clean test
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B --settings settings.xml clean test
